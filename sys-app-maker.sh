@@ -5,11 +5,7 @@ if [ $up -eq 1 ]; then
 	git clone https://github.com/remku/sys-app-maker-magisk
 	bash ~/sys-app-maker-magisk/sys-app-maker.sh
 fi
-### pakage ###
-zip -v > /dev/null 2>&1
-check Zip_Install_Check
-unzip -v > /dev/null 2>&1
-check Unzip_Install_Check
+
 ###  Color & shortcut ###
 red="\e[1;91m"
 green="\e[1;92m"
@@ -24,6 +20,12 @@ check(){
 		echo -e "${blue}$1 --> ${red}ERROR${white}"
 	fi
 }
+
+### pakage ###
+zip -v > /dev/null 2>&1
+check Zip_Install_Check
+unzip -v > /dev/null 2>&1
+check Unzip_Install_Check
 
 ### Setting Permission ###
 $sudo mount -o remount,rw /
