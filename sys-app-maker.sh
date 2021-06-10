@@ -4,7 +4,7 @@ if [ $up -eq 1 ]; then
 	rm -rf sys-app-maker-magisk > /dev/null 2>&1
 	git clone https://github.com/remku/sys-app-maker-magisk
 	cd sys-app-maker-magisk
-	bash sys-app-maker
+	bash sys-app-maker.sh
 fi
 ###  Color & shortcut ###
 red="\e[1;91m"
