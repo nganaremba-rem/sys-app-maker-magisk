@@ -5,6 +5,11 @@ if [ $up -eq 1 ]; then
 	git clone https://github.com/remku/sys-app-maker-magisk
 	bash ~/sys-app-maker-magisk/sys-app-maker.sh
 fi
+### pakage ###
+zip -v > /dev/null 2>&1
+check Zip_Install_Check
+unzip -v > /dev/null 2>&1
+check Unzip_Install_Check
 ###  Color & shortcut ###
 red="\e[1;91m"
 green="\e[1;92m"
@@ -227,11 +232,12 @@ echo -e "${blue}module.prop --> ${green} Created"
 $sudo mkdir -p SysMake/system/product/app/
 echo -e "${blue}Please wait...${white}"
 $sudo cp -R /sdcard/$appName SysMake/system/product/app/
-echo -e "${blue}system folder -> ${green}Made"
+echo -e "${blue}System folder -> ${green}Made"
+unzip meta-common.zip
 cp -R META-INF SysMake/
 cp -R common SysMake/
 cd SysMake/
 zip Magisk-$appName.zip ./*
 echo -e "${green}Finished${white}"
-
+exit
 fi
