@@ -1,3 +1,11 @@
+read up
+if [ $up -eq 1 ]; then
+	cd ~/
+	rm -rf sys-app-maker-magisk > /dev/null 2>&1
+	git clone https://github.com/remku/sys-app-maker-magisk
+	cd sys-app-maker-magisk
+	bash sys-app-maker
+fi
 ###  Color & shortcut ###
 red="\e[1;91m"
 green="\e[1;92m"
