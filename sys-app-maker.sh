@@ -31,6 +31,7 @@ if [ ! -e "/sdcard/$appName" ]; then
 	read -p $'\n\e[1;95mIs the app already installed as User APP (y/n): ' choice
 	if [ "$choice" == "y" ]; then
 		$sudo mkdir -p /sdcard/$appName
-		$sudo pm list packages -f | grep "$appName" | grep "/data/app"| sed -e 's/.*package:\(.*\)=\(.*\)/\1/' 
+		$sudo pm list packages -f | grep "$appName" | grep "/data/app"| sed -e 's/.*package:\(.*\)=\(.*\)/\1/' | $sudo xargs -I '{}' cp {} /sdcard/$appName
+		check Exporting_APK_to_sdcard
 	fi
 fi
