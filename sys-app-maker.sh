@@ -29,7 +29,7 @@ read -p $'\e[1;94mEnter App Name: \e[0m' appName
 if [ ! -e "/sdcard/$appName" ]; then
 	echo -e "${red}App Folder Not Found in '/sdcard'${white}"
 	read -p $'\n\e[1;94mIs the app already Installed as User APP (y/n): ' choice
-	if [ "$choice" -eq "y" ]; then
+	if [ $choice" -eq 'y' ]; then
 		$sudo mkdir /sdcard/$appName
 		$sudo pm list packages -f | grep "$appName" | grep "/data/app"| sed -e 's/.*package:\(.*\)=\(.*\)/\1/' | args -I {} mv {} /sdcard/$appName
 	fi
