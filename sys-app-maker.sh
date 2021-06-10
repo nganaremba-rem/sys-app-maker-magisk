@@ -208,17 +208,17 @@ EOF
 
 sed -i "s/REMKU/$appName/" SysMake/Install.sh 
 
-echo -e "${green}Module.prop\n\n id= ${white}"
+echo -ne "${green}Module.prop\n\n id= ${white}"
 read id
-echo -e "${green}\n name= ${white}"
+echo -ne "${green}\n name= ${white}"
 read name 
-echo -e "${green}\n version= ${white}"
+echo -ne "${green}\n version= ${white}"
 read version
-echo -e "${green}\n versionCode= ${white}"
+echo -ne "${green}\n versionCode= ${white}"
 read versionCode
-echo -e "${green}\n author= ${white}"
+echo -ne "${green}\n author= ${white}"
 read author
-echo -e "${green}\n description= ${white}"
+echo -ne "${green}\n description= ${white}"
 read description
 
 cat <<- EOF>> SysMake/module.prop
