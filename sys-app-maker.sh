@@ -30,7 +30,7 @@ if [ ! -e "/sdcard/$appName" ]; then
 	echo -e "${red}App Folder Not Found in '/sdcard'${white}"
 	read -p $'\n\e[1;95mIs the app already installed as User APP (y/n): ' choice
 	if [ "$choice" == "y" ]; then
-		$sudo mkdir /sdcard/$appName
-		$sudo pm list packages -f | grep "$appName" | grep "/data/app"| sed -e 's/.*package:\(.*\)=\(.*\)/\1/' | xargs -I {} mv {} /sdcard/$appName
+		$sudo mkdir -p /sdcard/$appName
+		$sudo pm list packages -f | grep "$appName" | grep "/data/app"| sed -e 's/.*package:\(.*\)=\(.*\)/\1/' 
 	fi
 fi
