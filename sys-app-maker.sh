@@ -31,13 +31,15 @@ if [ ! -e "/sdcard/$appName" ]; then
 	read -p $'\n\e[1;95mIs the app already installed as User APP (y/n): ' choice
 	if [ "$choice" == "y" ]; then
 		$sudo mkdir -p /sdcard/$appName
-		$sudo pm list packages -f | grep -i "$appName" | grep "/data/app" | sed -i 's/.*package:\(.*\)=\(.*\)/\1/' | xargs -I '{}' cp {} /sdcard/$appName
+		$sudo pm list packages -f | grep -i "$appName" | grep "/data/app" | sed -i 's/.*package:\(.*\)=\(.*\)/\1/' | xargs -I '{}' cp {} /sdcard/$appName/$appName.apk
 		check Exporting_APK_to_sdcard
 	else
 		exit
 	fi
 else
-	cat <<- 'EOF'>> Install.sh
+	mv /sdcard/$appName/*.apk /sdcard/$appName/$appName.apk
+	$sudo mkdir -p SysMake
+	cat <<- 'EOF'>> SysMake/Install.sh
 		##########################################################################################
 #
 # Magisk Module Installer Script
@@ -197,8 +199,39 @@ set_permissions() {
 # You can add more functions to assist your custom script code
 EOF
 
-sed -i "s/REMKU/$appName/" Install.sh 
+sed -i "s/REMKU/$appName/" SysMake/Install.sh 
 
+echo -e "${green}Module.prop\n\n id= ${white}"
+read id
+echo -e "${green}\n name= ${white}"
+read name 
+echo -e "${green}\n version= ${white}"
+read version
+echo -e "${green}\n versionCode= ${white}"
+read versionCode
+echo -e "${green}\n author= ${white}"
+read author
+echo -e "${green}\n description= ${white}"
+read description
 
+cat <<- EOF>> SysMake/module.prop
+id=$id
+name=$name
+version=v$version 
+versionCode=$versionCode
+author=$author
+description=$description
+EOF
+
+echo -e "${blue}module.prop --> ${green} Created"
+$sudo mkdir -p SysMake/system/product/app/
+echo -e "${blue}Please wait...${white}"
+$sudo cp -R /sdcard/$appName SysMake/system/product/app/
+echo -e "${blue}system folder -> ${green}Made"
+cp -R META-INF SysMake/
+cp -R common SysMake/
+cd SysMake/
+zip Magisk-$appName.zip ./*
+echo -e "${green}Finished${white}"
 
 fi
