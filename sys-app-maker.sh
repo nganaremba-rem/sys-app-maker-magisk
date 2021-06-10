@@ -197,7 +197,7 @@ set_permissions() {
 # You can add more functions to assist your custom script code
 EOF
 
-sed -i 's/REMKU/$appName' Install.sh 
+sed -i 's/REMKU/$appName/' Install.sh 
 
 
 
