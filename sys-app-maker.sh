@@ -44,9 +44,9 @@ if [ ! -e "/sdcard/$appName" ]; then
 		exit
 	fi
 else
-	mv /sdcard/$appName/*.apk /sdcard/$appName/$appName.apk
+	mv /sdcard/$appName/*.apk /sdcard/$appName/$appName.apk > /dev/null 2>&1
 	$sudo mkdir -p SysMake
-	cat <<- 'EOF'>> SysMake/Install.sh
+	cat <<- 'EOF'>> ./SysMake/Install.sh
 		##########################################################################################
 #
 # Magisk Module Installer Script
