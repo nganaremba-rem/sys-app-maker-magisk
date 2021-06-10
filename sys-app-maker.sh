@@ -14,7 +14,7 @@ check(){
 }
 
 ### Setting Permission ###
-$sudo mount -o remount.rw /
+$sudo mount -o remount,rw /
 check Mounting_System
 
 ### APP checking ###
