@@ -41,7 +41,7 @@ if [ ! -e "/sdcard/$appName" ]; then ### if app folder not present
 		$sudo pm list packages -f | grep -i "$appName" | grep "/data/app" | sed -i 's/.*package:\(.*\)=\(.*\)/\1/' | xargs -I '{}' cp {} /sdcard/$appName/$appName.apk
 		check Exporting_APK_to_sdcard
 	else
-		exit
+		exit 1
 	fi
 else  ### if app folder is present
 	mv /sdcard/$appName/*.apk /sdcard/$appName/$appName.apk > /dev/null 2>&1
