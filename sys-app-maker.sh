@@ -184,8 +184,7 @@ cp -R /sdcard/$appName /sdcard/SysMake/system/product/app/
 echo -e "${blue}System folder -> ${green}Made"
 unzip $HOME/sys-app-maker-magisk/meta-common.zip -d /sdcard/SysMake/
 cd /sdcard/SysMake/
-zip -r Magisk-$appName.zip /sdcard/SysMake/*
-fi
+zip -r Magisk-$appName.zip ./*
 echo -e "${green}Finished${white}"
 exit
 }
