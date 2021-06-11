@@ -4,6 +4,15 @@ red="\e[1;91m"
 green="\e[1;92m"
 blue="\e[1;95m"
 white="\e[0m"
+solidred="\e[1;41m"
+solidgreen="\e[1;42m"
+solidpink="\e[1;45m"
+solidskyblue="\e[1;46m"
+sred="\e[1;101m"
+sgreen="\e[1;102m"
+sblue="\e[1;104m"
+spink="\e[1;105m"
+sskyblue="\e[1;106m"
 sudo="su -c"
 ### Checker ###
 check(){
@@ -13,7 +22,8 @@ check(){
 		echo -e "${blue}$1 --> ${red}ERROR${white}"
 	fi
 }
-
+echo -e "${sblue} REM MAGISK MODULE SYSTEMIZER  ${white}"
+sleep 3
 ### package ###
 zip -v > /dev/null 2>&1
 check Zip_Install_Check
@@ -186,17 +196,17 @@ sed -i "s/REMKU/$appName/" /sdcard/SysMake/Install.sh
 
 
 ### input for module.prop
-echo -ne "${red}Module.prop\n\n${green}id= ${white}"
+echo -ne "${spink}  Module.prop  ${green}\n\nid = ${white}"
 read id
-echo -ne "${green}\nname= ${white}"
+echo -ne "${green}name = ${white}"
 read name 
-echo -ne "${green}\nversion= ${white}"
+echo -ne "${green}version = ${white}"
 read version
-echo -ne "${green}\nversionCode= ${white}"
+echo -ne "${green}versionCode = ${white}"
 read versionCode
-echo -ne "${green}\nauthor= ${white}"
+echo -ne "${green}author = ${white}"
 read author
-echo -ne "${green}\ndescription= ${white}"
+echo -ne "${green}description = ${white}"
 read description
 ### making module.prop
 cat <<- EOF> /sdcard/SysMake/module.prop
@@ -207,8 +217,8 @@ versionCode=$versionCode
 author=$author
 description=$description
 EOF
-echo -e "${blue}module.prop --> ${green} Created"
-echo -e "\n\n${red}---Options---${white}\n\n${green}1. /system/priv-app\n${blue}2. /system/product/app/\n3. /system/app\n\nChoose option: ${white}"
+echo -e "\n${blue}module.prop --> ${green} Created"
+echo -e "\n\n\e[1;101m ---Options--- ${white}\n\n\e[1;32m1. /system/priv-app\n\e[1;34m2. /system/product/app/\n\e[1;36m3. /system/app\n\n${solidred}Choose option: ${white}"
 read option
 if [ $option -eq 1 ]; then
 	fol="/sdcard/SysMake/system/priv-app"
