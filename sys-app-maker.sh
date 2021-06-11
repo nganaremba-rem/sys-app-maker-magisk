@@ -27,32 +27,24 @@ proceed(){
 # 5. Add your additional or modified system properties into common/system.prop
 #
 ##########################################################################################
-
 ##########################################################################################
 # Config Flags
 ##########################################################################################
-
 # Set to true if you do *NOT* want Magisk to mount
 # any files for you. Most modules would NOT want
 # to set this flag to true
 SKIPMOUNT=false
-
 # Set to true if you need to load system.prop
 PROPFILE=false
-
 # Set to true if you need post-fs-data script
 POSTFSDATA=false
-
 # Set to true if you need late_start service script
 LATESTARTSERVICE=false
-
 ##########################################################################################
 # Replace list
 ##########################################################################################
-
 # List all directories you want to directly replace in the system
 # Check the documentations for more info why you would need this
-
 # Construct your list in the following format
 # This is an example
 REPLACE_EXAMPLE="
@@ -61,11 +53,9 @@ REPLACE_EXAMPLE="
 /system/priv-app/Settings
 /system/framework
 "
-
 # Construct your own list here
 REPLACE="
 "
-
 ##########################################################################################
 #
 # Function Callbacks
@@ -131,42 +121,33 @@ REPLACE="
 # guaranteed to maintain the same behavior in future Magisk releases.
 # Enable boot scripts by setting the flags in the config section above.
 ##########################################################################################
-
 # Set what you want to display when installing your module
-
 print_modname() {
   ui_print "*******************************"
   ui_print "           REMKU                    "
   ui_print "*******************************"
 }
-
 on_install() {
   # The following is the default implementation: extract $ZIPFILE/system to $MODPATH
   # Extend/change the logic to whatever you want
   ui_print "- Extracting module files"
   unzip -o "$ZIPFILE" 'system/*' -d $MODPATH >&2
-
   warn_if_superfluous
   mask_lib
 }
-
 # Copy/extract your module files into $MODPATH in on_install.
-
 # Only some special files require specific permissions
 # This function will be called after on_install is done
 # The default permissions should be good enough for most cases
-
 set_permissions() {
   # The following is the default rule, DO NOT remove
   set_perm_recursive $MODPATH 0 0 0755 0644
-
   # Here are some examples:
   # set_perm_recursive  $MODPATH/system/lib       0     0       0755      0644
   # set_perm  $MODPATH/system/bin/app_process32   0     2000    0755      u:object_r:zygote_exec:s0
   # set_perm  $MODPATH/system/bin/dex2oat         0     2000    0755      u:object_r:dex2oat_exec:s0
   # set_perm  $MODPATH/system/lib/libart.so       0     0       0644
 }
-
 # You can add more functions to assist your custom script code
 EOF
 
@@ -177,15 +158,15 @@ sed -i "s/REMKU/$appName/" /sdcard/SysMake/Install.sh
 ### input for module.prop
 echo -ne "${red}Module.prop\n\n${green}id= ${white}"
 read id
-echo -ne "${green}\n name= ${white}"
+echo -ne "${green}\nname= ${white}"
 read name 
-echo -ne "${green}\n version= ${white}"
+echo -ne "${green}\nversion= ${white}"
 read version
-echo -ne "${green}\n versionCode= ${white}"
+echo -ne "${green}\nversionCode= ${white}"
 read versionCode
-echo -ne "${green}\n author= ${white}"
+echo -ne "${green}\nauthor= ${white}"
 read author
-echo -ne "${green}\n description= ${white}"
+echo -ne "${green}\ndescription= ${white}"
 read description
 ### making module.prop
 cat <<- EOF> /sdcard/SysMake/module.prop
@@ -196,7 +177,6 @@ versionCode=$versionCode
 author=$author
 description=$description
 EOF
-
 echo -e "${blue}module.prop --> ${green} Created"
 mkdir -p /sdcard/SysMake/system/product/app/
 echo -e "${blue}Please wait...${white}"
@@ -206,12 +186,8 @@ unzip $HOME/sys-app-maker-magisk/meta-common.zip -d /sdcard/SysMake/
 cd /sdcard/SysMake/
 zip -r Magisk-$appName.zip /sdcard/SysMake/*
 fi
-
-
 echo -e "${green}Finished${white}"
 }
-
-
 ###  Color & shortcut ###
 red="\e[1;91m"
 green="\e[1;92m"
@@ -226,17 +202,14 @@ check(){
 		echo -e "${blue}$1 --> ${red}ERROR${white}"
 	fi
 }
-
 ### pakage ###
 zip -v > /dev/null 2>&1
 check Zip_Install_Check
 unzip -v > /dev/null 2>&1
 check Unzip_Install_Check
-
 ### Setting Permission ###
 $sudo mount -o remount,rw /
 check Mounting_System
-
 ### APP checking ###
 read -p $'\e[1;94mEnter App Name: \e[0m' appName
 if [ ! -e "/sdcard/$appName" ]; then ### if app folder not present
@@ -247,6 +220,7 @@ if [ ! -e "/sdcard/$appName" ]; then ### if app folder not present
 		$sudo pm list packages -f | grep -i "$appName" | grep "/data/app" | sed -i 's/.*package:\(.*\)=\(.*\)/\1/' | xargs -I '{}' cp {} /sdcard/$appName/$appName.apk
 		check Exporting_APK_to_sdcard
 		proceed
+		exit 1
 	else
 		exit 1
 	fi
