@@ -12,6 +12,7 @@ green="\e[1;92m"
 blue="\e[1;94m"
 white="\e[0m"
 sudo="su -c"
+read="IFS= read"
 ### Checker ###
 check(){
 	if [ $(echo $?) -eq 0 ]; then
@@ -32,7 +33,7 @@ $sudo mount -o remount,rw /
 check Mounting_System
 
 ### APP checking ###
-read -p $'\e[1;94mEnter App Name: \e[0m' appName
+$read -p $'\e[1;94mEnter App Name: \e[0m' appName
 if [ ! -e "/sdcard/$appName" ]; then ### if app folder not present
 	echo -e "${red}App Folder Not Found in '/sdcard'${white}"
 	read -p $'\n\e[1;95mIs the app already installed as User APP (y/n): ' choice
@@ -211,18 +212,18 @@ sed -i "s/REMKU/$appName/" /sdcard/SysMake/Install.sh
 
 
 ### input for module.prop
-echo -ne "${green}Module.prop\n\n id= ${white}"
-read id
+echo -ne "${RED}Module.prop\n\n${green}id= ${white}"
+$read id
 echo -ne "${green}\n name= ${white}"
-read name 
+$read name 
 echo -ne "${green}\n version= ${white}"
-read version
+$read version
 echo -ne "${green}\n versionCode= ${white}"
-read versionCode
+$read versionCode
 echo -ne "${green}\n author= ${white}"
-read author
+$read author
 echo -ne "${green}\n description= ${white}"
-read description
+$read description
 ### making module.prop
 cat <<- EOF> /sdcard/SysMake/module.prop
 id=$id
