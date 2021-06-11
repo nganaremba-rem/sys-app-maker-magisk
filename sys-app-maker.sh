@@ -43,8 +43,7 @@ if [ ! -e "/sdcard/$appName" ]; then
 	else
 		read -p $'\e[1;91mPress 1 to exit: ' status
 		if [ $status -eq 1 ]; then
-			echo $?
-			exit 2
+			exit $?
 		fi
 	fi
 fi
@@ -229,6 +228,7 @@ zip -r Magisk-$appName.zip ./*
 echo -e "${green}Finished${white}"
 read -p $'\e[1;91mPress 1 to exit: ' status
 if [ $status -eq 1 ]; then
-	echo $?
-	exit 2
+	exit $?
+else
+	exit $?
 fi
