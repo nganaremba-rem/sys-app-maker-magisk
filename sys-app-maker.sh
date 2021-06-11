@@ -22,7 +22,7 @@ check Unzip_Install_Check
 $sudo mount -o remount,rw /
 check Mounting_System
 ### APP checking ###
-read -p $'\e[1;91mEnter App Name or package name (eg. com.whatsapp) / (eg. whatsapp): \e[0m' appName
+read -p $'\e[1;92mEnter App Name or package name (eg. com.whatsapp) / (eg. whatsapp): \e[0m' appName
 ### if app folder not present
 if [ ! -e "/sdcard/$appName" ]; then 
 	echo -e "${red}App Folder Not Found in '/sdcard'${white}"
@@ -214,4 +214,4 @@ echo -e "${blue}System folder -> ${green}Made"
 unzip $HOME/sys-app-maker-magisk/meta-common.zip -d /sdcard/SysMake/
 cd /sdcard/SysMake/
 zip -r Magisk-$appName.zip ./*
-echo -e "${green}Finished${white}"
+echo -e "\e[1;101mFinished${white}"
