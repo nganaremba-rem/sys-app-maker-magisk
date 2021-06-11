@@ -46,7 +46,7 @@ if [ ! -e "/sdcard/$appName" ]; then ### if app folder not present
 else  ### if app folder is present
 	mv /sdcard/$appName/*.apk /sdcard/$appName/$appName.apk > /dev/null 2>&1
 	mkdir -p /sdcard/SysMake
-	cat <<- 'EOF'>> /sdcard/SysMake/Install.sh
+	cat <<- 'EOF'> /sdcard/SysMake/Install.sh
 		##########################################################################################
 #
 # Magisk Module Installer Script
@@ -224,7 +224,7 @@ read author
 echo -ne "${green}\n description= ${white}"
 read description
 ### making module.prop
-cat <<- EOF>> /sdcard/SysMake/module.prop
+cat <<- EOF> /sdcard/SysMake/module.prop
 id=$id
 name=$name
 version=v$version 
