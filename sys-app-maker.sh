@@ -177,7 +177,6 @@ versionCode=$versionCode
 author=$author
 description=$description
 EOF
-
 echo -e "${blue}module.prop --> ${green} Created"
 mkdir -p /sdcard/SysMake/system/product/app/
 echo -e "${blue}Please wait...${white}"
@@ -185,12 +184,11 @@ cp -R /sdcard/$appName /sdcard/SysMake/system/product/app/
 echo -e "${blue}System folder -> ${green}Made"
 unzip $HOME/sys-app-maker-magisk/meta-common.zip -d /sdcard/SysMake/
 cd /sdcard/SysMake/
-zip -r Magisk-$appName.zip ./*
-check zipping
+zip -r Magisk-$appName.zip /sdcard/SysMake/*
+fi
 echo -e "${green}Finished${white}"
-exit 1
+exit
 }
-
 ###  Color & shortcut ###
 red="\e[1;91m"
 green="\e[1;92m"
@@ -205,6 +203,7 @@ check(){
 		echo -e "${blue}$1 --> ${red}ERROR${white}"
 	fi
 }
+main(){
 ### pakage ###
 zip -v > /dev/null 2>&1
 check Zip_Install_Check
@@ -220,13 +219,15 @@ if [ ! -e "/sdcard/$appName" ]; then ### if app folder not present
 	read -p $'\n\e[1;95mIs the app already installed as User APP (y/n): ' choice
 	if [ "$choice" == "y" ]; then  ### Copying apk to /sdcard/app/app.apk
 		$sudo mkdir -p /sdcard/$appName
-		$sudo pm list packages -f | grep -i "$appName" | grep "/data/app" | sed -e 's/.*package:\(.*\)=\(.*\)/\1/' | xargs -I '{}' cp {} /sdcard/$appName/$appName.apk
+		$sudo pm list packages -f | grep -i "$appName" | grep "/data/app" | sed -i 's/.*package:\(.*\)=\(.*\)/\1/' | xargs -I '{}' cp {} /sdcard/$appName/$appName.apk
 		check Exporting_APK_to_sdcard
 		proceed
-		exit 1
+		exit
 	else
-		exit 1
+		exit
 	fi
 fi
+}
+main
 proceed
-exit 1
+exit
