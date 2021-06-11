@@ -232,11 +232,11 @@ fi
 mkdir -p $fol
 echo -e "${blue}Please wait...${white}"
 cp -R /sdcard/$appName $fol
-echo -e "${blue}System folder -> ${green}Made"
+echo -e "${blue}System folder -> ${green}Made${white}"
 unzip $HOME/sys-app-maker-magisk/meta-common.zip -d /sdcard/SysMake/
 cd /sdcard/SysMake/
 zip -r Magisk-$appName.zip ./*
 rm -rf /sdcard/SysMake/META-INF /sdcard/SysMake/common /sdcard/SysMake/Install.sh /sdcard/SysMake/system /sdcard/SysMake/module.prop
 rm -rf /sdcard/$appName
-echo -e "\e[1;101mFinished${white}"
+echo -e "\n\n${white}${solidskyblue} Finished ${white}"
 
