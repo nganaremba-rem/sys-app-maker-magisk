@@ -211,7 +211,7 @@ sed -i "s/REMKU/$appName/" /sdcard/SysMake/Install.sh
 
 
 ### input for module.prop
-echo -ne "${RED}Module.prop\n\n${green}id= ${white}"
+echo -ne "${red}Module.prop\n\n${green}id= ${white}"
 read id
 echo -ne "${green}\n name= ${white}"
 read name 
