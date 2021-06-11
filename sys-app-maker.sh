@@ -6,44 +6,8 @@ if [ $up -eq 1 ]; then
 	bash ~/sys-app-maker-magisk/sys-app-maker.sh
 fi
 
-###  Color & shortcut ###
-red="\e[1;91m"
-green="\e[1;92m"
-blue="\e[1;94m"
-white="\e[0m"
-sudo="su -c"
-### Checker ###
-check(){
-	if [ $(echo $?) -eq 0 ]; then
-		echo -e "${blue}$1 --> ${green}OK${white}"
-	else
-		echo -e "${blue}$1 --> ${red}ERROR${white}"
-	fi
-}
-
-### pakage ###
-zip -v > /dev/null 2>&1
-check Zip_Install_Check
-unzip -v > /dev/null 2>&1
-check Unzip_Install_Check
-
-### Setting Permission ###
-$sudo mount -o remount,rw /
-check Mounting_System
-
-### APP checking ###
-read -p $'\e[1;94mEnter App Name: \e[0m' appName
-if [ ! -e "/sdcard/$appName" ]; then ### if app folder not present
-	echo -e "${red}App Folder Not Found in '/sdcard'${white}"
-	read -p $'\n\e[1;95mIs the app already installed as User APP (y/n): ' choice
-	if [ "$choice" == "y" ]; then  ### Copying apk to /sdcard/app/app.apk
-		$sudo mkdir -p /sdcard/$appName
-		$sudo pm list packages -f | grep -i "$appName" | grep "/data/app" | sed -i 's/.*package:\(.*\)=\(.*\)/\1/' | xargs -I '{}' cp {} /sdcard/$appName/$appName.apk
-		check Exporting_APK_to_sdcard
-	else
-		exit 1
-	fi
-else  ### if app folder is present
+proceed(){
+### if app folder is present
 	mv /sdcard/$appName/*.apk /sdcard/$appName/$appName.apk > /dev/null 2>&1
 	mkdir -p /sdcard/SysMake
 	cat <<- 'EOF'> /sdcard/SysMake/Install.sh
@@ -245,4 +209,47 @@ fi
 
 
 echo -e "${green}Finished${white}"
+}
+
+
+###  Color & shortcut ###
+red="\e[1;91m"
+green="\e[1;92m"
+blue="\e[1;94m"
+white="\e[0m"
+sudo="su -c"
+### Checker ###
+check(){
+	if [ $(echo $?) -eq 0 ]; then
+		echo -e "${blue}$1 --> ${green}OK${white}"
+	else
+		echo -e "${blue}$1 --> ${red}ERROR${white}"
+	fi
+}
+
+### pakage ###
+zip -v > /dev/null 2>&1
+check Zip_Install_Check
+unzip -v > /dev/null 2>&1
+check Unzip_Install_Check
+
+### Setting Permission ###
+$sudo mount -o remount,rw /
+check Mounting_System
+
+### APP checking ###
+read -p $'\e[1;94mEnter App Name: \e[0m' appName
+if [ ! -e "/sdcard/$appName" ]; then ### if app folder not present
+	echo -e "${red}App Folder Not Found in '/sdcard'${white}"
+	read -p $'\n\e[1;95mIs the app already installed as User APP (y/n): ' choice
+	if [ "$choice" == "y" ]; then  ### Copying apk to /sdcard/app/app.apk
+		$sudo mkdir -p /sdcard/$appName
+		$sudo pm list packages -f | grep -i "$appName" | grep "/data/app" | sed -i 's/.*package:\(.*\)=\(.*\)/\1/' | xargs -I '{}' cp {} /sdcard/$appName/$appName.apk
+		check Exporting_APK_to_sdcard
+		proceed
+	else
+		exit 1
+	fi
+fi
+proceed
 exit 1
