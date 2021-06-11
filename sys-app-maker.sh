@@ -223,4 +223,8 @@ unzip $HOME/sys-app-maker-magisk/meta-common.zip -d /sdcard/SysMake/
 cd /sdcard/SysMake/
 zip -r Magisk-$appName.zip ./*
 echo -e "${green}Finished${white}"
-exit
+read -p $'\e[1;91mPress 1 to exit' status
+if [ $status -eq 1 ]; then
+	echo $?
+	exit 1
+fi
