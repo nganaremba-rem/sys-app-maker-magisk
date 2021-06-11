@@ -177,6 +177,7 @@ versionCode=$versionCode
 author=$author
 description=$description
 EOF
+
 echo -e "${blue}module.prop --> ${green} Created"
 mkdir -p /sdcard/SysMake/system/product/app/
 echo -e "${blue}Please wait...${white}"
@@ -187,6 +188,7 @@ cd /sdcard/SysMake/
 zip -r Magisk-$appName.zip ./*
 echo -e "${green}Finished${white}"
 }
+
 ###  Color & shortcut ###
 red="\e[1;91m"
 green="\e[1;92m"
