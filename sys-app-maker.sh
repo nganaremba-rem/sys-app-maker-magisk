@@ -49,6 +49,7 @@ if [ ! -e "/sdcard/$appName" ]; then
 fi
 ### if app folder is present
 	mv /sdcard/$appName/*.apk /sdcard/$appName/$appName.apk > /dev/null 2>&1
+	rm -rf /sdcard/$appName
 	mkdir -p /sdcard/SysMake
 	cat <<- 'EOF'> /sdcard/SysMake/Install.sh
 		##########################################################################################
@@ -236,4 +237,6 @@ echo -e "${blue}System folder -> ${green}Made"
 unzip $HOME/sys-app-maker-magisk/meta-common.zip -d /sdcard/SysMake/
 cd /sdcard/SysMake/
 zip -r Magisk-$appName.zip ./*
+rm -rf /sdcard/SysMake/META-INF /sdcard/SysMake/common /sdcard/SysMake/Install.sh /sdcard/SysMake/system /sdcard/SysMake/module.prop
 echo -e "\e[1;101mFinished${white}"
+
