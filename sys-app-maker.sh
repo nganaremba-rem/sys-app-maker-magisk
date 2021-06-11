@@ -191,7 +191,7 @@ exit
 ###  Color & shortcut ###
 red="\e[1;91m"
 green="\e[1;92m"
-blue="\e[1;94m"
+blue="\e[1;95m"
 white="\e[0m"
 sudo="su -c"
 ### Checker ###
@@ -221,6 +221,7 @@ if [ ! -e "/sdcard/$appName" ]; then ### if app folder not present
 		$sudo pm list packages -f | grep -i "$appName" | grep "/data/app" | sed -e 's/.*package:\(.*\)=\(.*\)/\1/' | xargs -I '{}' cp {} /sdcard/$appName/$appName.apk
 		check Exporting_APK_to_sdcard
 		proceed
+		sleep 3
 		exit 1
 	else
 		exit 1
@@ -229,4 +230,5 @@ fi
 }
 main
 proceed
+sleep 3
 exit 1
