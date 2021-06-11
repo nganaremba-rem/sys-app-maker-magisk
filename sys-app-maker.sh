@@ -45,8 +45,8 @@ if [ ! -e "/sdcard/$appName" ]; then
 	fi
 else
 	mv /sdcard/$appName/*.apk /sdcard/$appName/$appName.apk > /dev/null 2>&1
-	$sudo mkdir -p ~/SysMake
-	$sudo cat <<- 'EOF'>> ~/SysMake/Install.sh
+	$sudo mkdir -p /sdcard/SysMake
+	$sudo cat <<- 'EOF'>> /sdcard/SysMake/Install.sh
 		##########################################################################################
 #
 # Magisk Module Installer Script
@@ -206,7 +206,7 @@ set_permissions() {
 # You can add more functions to assist your custom script code
 EOF
 
-sed -i "s/REMKU/$appName/" ~/SysMake/Install.sh 
+sed -i "s/REMKU/$appName/" /sdcard/SysMake/Install.sh 
 
 echo -ne "${green}Module.prop\n\n id= ${white}"
 read id
@@ -221,7 +221,7 @@ read author
 echo -ne "${green}\n description= ${white}"
 read description
 
-$sudo cat <<- EOF>> ~/SysMake/module.prop
+$sudo cat <<- EOF>> /sdcard/SysMake/module.prop
 id=$id
 name=$name
 version=v$version 
@@ -231,14 +231,14 @@ description=$description
 EOF
 
 echo -e "${blue}module.prop --> ${green} Created"
-$sudo mkdir -p SysMake/system/product/app/
+$sudo mkdir -p /sdcard/SysMake/system/product/app/
 echo -e "${blue}Please wait...${white}"
-$sudo cp -R /sdcard/$appName SysMake/system/product/app/
+$sudo cp -R /sdcard/$appName /sdcard/SysMake/system/product/app/
 echo -e "${blue}System folder -> ${green}Made"
 unzip meta-common.zip
-cp -R META-INF SysMake/
-cp -R common SysMake/
-cd SysMake/
+cp -R META-INF /sdcard/SysMake/
+cp -R common /sdcard/SysMake/
+cd /sdcard/SysMake/
 zip Magisk-$appName.zip ./*
 echo -e "${green}Finished${white}"
 exit
