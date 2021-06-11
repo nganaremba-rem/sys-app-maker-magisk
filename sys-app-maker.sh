@@ -44,7 +44,7 @@ if [ ! -e "/sdcard/$appName" ]; then
 		read -p $'\e[1;91mPress 1 to exit: ' status
 		if [ $status -eq 1 ]; then
 			echo $?
-			exit 1
+			exit 2
 		fi
 	fi
 fi
@@ -230,5 +230,5 @@ echo -e "${green}Finished${white}"
 read -p $'\e[1;91mPress 1 to exit: ' status
 if [ $status -eq 1 ]; then
 	echo $?
-	exit 1
+	exit 2
 fi
