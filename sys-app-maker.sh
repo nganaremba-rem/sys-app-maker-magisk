@@ -185,7 +185,6 @@ echo -e "${blue}System folder -> ${green}Made"
 unzip $HOME/sys-app-maker-magisk/meta-common.zip -d /sdcard/SysMake/
 cd /sdcard/SysMake/
 zip -r Magisk-$appName.zip /sdcard/SysMake/*
-fi
 echo -e "${green}Finished${white}"
 }
 ###  Color & shortcut ###
