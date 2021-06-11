@@ -12,7 +12,7 @@ green="\e[1;92m"
 blue="\e[1;94m"
 white="\e[0m"
 sudo="su -c"
-read="IFS=read -r"
+read="IFS="" read -r"
 ### Checker ###
 check(){
 	if [ $(echo $?) -eq 0 ]; then
