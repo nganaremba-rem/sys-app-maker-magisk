@@ -1,3 +1,4 @@
+clear
 ###  Color & shortcut ###
 red="\e[1;91m"
 green="\e[1;92m"
@@ -13,7 +14,7 @@ check(){
 	fi
 }
 
-### pakage ###
+### package ###
 zip -v > /dev/null 2>&1
 check Zip_Install_Check
 unzip -v > /dev/null 2>&1
