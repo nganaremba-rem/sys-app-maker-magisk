@@ -238,5 +238,5 @@ cd /sdcard/SysMake/
 zip -r Magisk-$appName.zip ./*
 rm -rf /sdcard/SysMake/META-INF /sdcard/SysMake/common /sdcard/SysMake/Install.sh /sdcard/SysMake/system /sdcard/SysMake/module.prop
 rm -rf /sdcard/$appName
-echo -e "\n\n${white}${solidskyblue} Finished ${white}"
+echo -e "\n\n${white}${solidred} Finished ${white}\n\n"
 
