@@ -188,6 +188,7 @@ cd /sdcard/SysMake/
 zip -r Magisk-$appName.zip ./*
 check zipping
 echo -e "${green}Finished${white}"
+exit 1
 }
 
 ###  Color & shortcut ###
