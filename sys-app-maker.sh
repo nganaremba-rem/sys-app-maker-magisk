@@ -218,15 +218,15 @@ if [ ! -e "/sdcard/$appName" ]; then ### if app folder not present
 	read -p $'\n\e[1;95mIs the app already installed as User APP (y/n): ' choice
 	if [ "$choice" == "y" ]; then  ### Copying apk to /sdcard/app/app.apk
 		$sudo mkdir -p /sdcard/$appName
-		$sudo pm list packages -f | grep -i "$appName" | grep "/data/app" | sed -i 's/.*package:\(.*\)=\(.*\)/\1/' | xargs -I '{}' cp {} /sdcard/$appName/$appName.apk
+		$sudo pm list packages -f | grep -i "$appName" | grep "/data/app" | sed -e 's/.*package:\(.*\)=\(.*\)/\1/' | xargs -I '{}' cp {} /sdcard/$appName/$appName.apk
 		check Exporting_APK_to_sdcard
 		proceed
-		exit
+		exit 1
 	else
-		exit
+		exit 1
 	fi
 fi
 }
 main
 proceed
-exit
+exit 1
