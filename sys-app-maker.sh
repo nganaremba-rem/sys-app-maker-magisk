@@ -22,7 +22,7 @@ check(){
 		echo -e "${blue}$1 --> ${red}ERROR${white}"
 	fi
 }
-echo -e "${sblue} REM MAGISK MODULE SYSTEMIZER  ${white}"
+echo -e "${sblue} REM MAGISK MODULE SYSTEMIZER  ${white}\n"
 sleep 3
 ### package ###
 zip -v > /dev/null 2>&1
