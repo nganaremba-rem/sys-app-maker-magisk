@@ -45,8 +45,8 @@ if [ ! -e "/sdcard/$appName" ]; then
 	fi
 else
 	mv /sdcard/$appName/*.apk /sdcard/$appName/$appName.apk > /dev/null 2>&1
-	$sudo mkdir -p SysMake
-	cat <<- 'EOF'>> ./SysMake/Install.sh
+	$sudo mkdir -p ~/SysMake
+	cat <<- 'EOF'>> ~/SysMake/Install.sh
 		##########################################################################################
 #
 # Magisk Module Installer Script
@@ -206,7 +206,7 @@ set_permissions() {
 # You can add more functions to assist your custom script code
 EOF
 
-sed -i "s/REMKU/$appName/" SysMake/Install.sh 
+sed -i "s/REMKU/$appName/" ~/SysMake/Install.sh 
 
 echo -ne "${green}Module.prop\n\n id= ${white}"
 read id
@@ -221,7 +221,7 @@ read author
 echo -ne "${green}\n description= ${white}"
 read description
 
-cat <<- EOF>> SysMake/module.prop
+cat <<- EOF>> ~/SysMake/module.prop
 id=$id
 name=$name
 version=v$version 
