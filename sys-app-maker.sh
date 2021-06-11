@@ -228,7 +228,7 @@ zip -r Magisk-$appName.zip ./*
 echo -e "${green}Finished${white}"
 read -p $'\e[1;91mPress 1 to exit: ' status
 if [ $status -eq 1 ]; then
-	exit $?
+	$sudo exit $?
 else
-	exit $?
+	$sudo exit $?
 fi
