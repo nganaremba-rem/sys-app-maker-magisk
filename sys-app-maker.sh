@@ -33,20 +33,20 @@ check Mounting_System
 
 ### APP checking ###
 read -p $'\e[1;94mEnter App Name: \e[0m' appName
-if [ ! -e "/sdcard/$appName" ]; then
+if [ ! -e "/sdcard/$appName" ]; then ### if app folder not present
 	echo -e "${red}App Folder Not Found in '/sdcard'${white}"
 	read -p $'\n\e[1;95mIs the app already installed as User APP (y/n): ' choice
-	if [ "$choice" == "y" ]; then
+	if [ "$choice" == "y" ]; then  ### Copying apk to /sdcard/app/app.apk
 		$sudo mkdir -p /sdcard/$appName
 		$sudo pm list packages -f | grep -i "$appName" | grep "/data/app" | sed -i 's/.*package:\(.*\)=\(.*\)/\1/' | xargs -I '{}' cp {} /sdcard/$appName/$appName.apk
 		check Exporting_APK_to_sdcard
 	else
 		exit
 	fi
-else
+else  ### if app folder is present
 	mv /sdcard/$appName/*.apk /sdcard/$appName/$appName.apk > /dev/null 2>&1
-	$sudo mkdir -p /sdcard/SysMake
-	$sudo cat <<- 'EOF'>> /sdcard/SysMake/Install.sh
+	mkdir -p /sdcard/SysMake
+	cat <<- 'EOF'>> /sdcard/SysMake/Install.sh
 		##########################################################################################
 #
 # Magisk Module Installer Script
@@ -71,10 +71,10 @@ else
 # Set to true if you do *NOT* want Magisk to mount
 # any files for you. Most modules would NOT want
 # to set this flag to true
-SKIPMOUNT=true
+SKIPMOUNT=false
 
 # Set to true if you need to load system.prop
-PROPFILE=true
+PROPFILE=false
 
 # Set to true if you need post-fs-data script
 POSTFSDATA=false
@@ -206,8 +206,11 @@ set_permissions() {
 # You can add more functions to assist your custom script code
 EOF
 
+### changing ui print 
 sed -i "s/REMKU/$appName/" /sdcard/SysMake/Install.sh 
 
+
+### input for module.prop
 echo -ne "${green}Module.prop\n\n id= ${white}"
 read id
 echo -ne "${green}\n name= ${white}"
@@ -220,8 +223,8 @@ echo -ne "${green}\n author= ${white}"
 read author
 echo -ne "${green}\n description= ${white}"
 read description
-
-$sudo cat <<- EOF>> /sdcard/SysMake/module.prop
+### making module.prop
+cat <<- EOF>> /sdcard/SysMake/module.prop
 id=$id
 name=$name
 version=v$version 
@@ -231,15 +234,17 @@ description=$description
 EOF
 
 echo -e "${blue}module.prop --> ${green} Created"
-$sudo mkdir -p /sdcard/SysMake/system/product/app/
+mkdir -p /sdcard/SysMake/system/product/app/
 echo -e "${blue}Please wait...${white}"
-$sudo cp -R /sdcard/$appName /sdcard/SysMake/system/product/app/
+cp -R /sdcard/$appName /sdcard/SysMake/system/product/app/
 echo -e "${blue}System folder -> ${green}Made"
-unzip meta-common.zip
-cp -R META-INF /sdcard/SysMake/
-cp -R common /sdcard/SysMake/
+unzip $HOME/sys-app-maker-magisk/meta-common.zip
+cp -R $HOME/sys-app-maker-magisk/META-INF /sdcard/SysMake/
+cp -R $HOME/sys-app-maker-magisk/common /sdcard/SysMake/
 cd /sdcard/SysMake/
 zip Magisk-$appName.zip ./*
+fi
+
+
 echo -e "${green}Finished${white}"
 exit
-fi
