@@ -208,9 +208,20 @@ author=$author
 description=$description
 EOF
 echo -e "${blue}module.prop --> ${green} Created"
-mkdir -p /sdcard/SysMake/system/product/app/
+echo -e "${red}---Options---{white}\n\n{green}1. /system/priv-app\n2. /system/product/app/\n3. /system/app\n\nChoose option: {white}"
+read option
+if [ $option -eq 1 ]; then
+	fol="/sdcard/SysMake/system/priv-app"
+elif [ $option -eq 2 ]; then
+	fol="/sdcard/SysMake/system/product/app/"
+elif [ $option -eq 3 ]; then
+	fol="/sdcard/SysMake/system/app/"
+else
+	echo -e "${red}Wrong Choice${white}"
+fi
+mkdir -p $fol
 echo -e "${blue}Please wait...${white}"
-cp -R /sdcard/$appName /sdcard/SysMake/system/product/app/
+cp -R /sdcard/$appName $fol
 echo -e "${blue}System folder -> ${green}Made"
 unzip $HOME/sys-app-maker-magisk/meta-common.zip -d /sdcard/SysMake/
 cd /sdcard/SysMake/
