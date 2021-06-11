@@ -186,6 +186,7 @@ echo -e "${blue}System folder -> ${green}Made"
 unzip $HOME/sys-app-maker-magisk/meta-common.zip -d /sdcard/SysMake/
 cd /sdcard/SysMake/
 zip -r Magisk-$appName.zip ./*
+check zipping
 echo -e "${green}Finished${white}"
 }
 
@@ -221,10 +222,10 @@ if [ ! -e "/sdcard/$appName" ]; then ### if app folder not present
 		$sudo pm list packages -f | grep -i "$appName" | grep "/data/app" | sed -e 's/.*package:\(.*\)=\(.*\)/\1/' | xargs -I '{}' cp {} /sdcard/$appName/$appName.apk
 		check Exporting_APK_to_sdcard
 		proceed
-		exit $(echo $?)
+		exit 1
 	else
-		exit $(echo $?)
+		exit 1
 	fi
 fi
 proceed
-exit $(echo $?)
+exit 1
