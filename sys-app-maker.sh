@@ -22,7 +22,7 @@ check Unzip_Install_Check
 $sudo mount -o remount,rw /
 check Mounting_System
 ### APP checking ###
-read -p $'\e[1;94mEnter App Name: \e[0m' appName
+read -p $'\e[1;94mEnter App Name or package name (eg. com.whatsapp) / (eg. whatsapp): \e[0m' appName
 ### if app folder not present
 if [ ! -e "/sdcard/$appName" ]; then 
 	echo -e "${red}App Folder Not Found in '/sdcard'${white}"
