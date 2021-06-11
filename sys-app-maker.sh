@@ -49,7 +49,6 @@ if [ ! -e "/sdcard/$appName" ]; then
 fi
 ### if app folder is present
 	mv /sdcard/$appName/*.apk /sdcard/$appName/$appName.apk > /dev/null 2>&1
-	rm -rf /sdcard/$appName
 	mkdir -p /sdcard/SysMake
 	cat <<- 'EOF'> /sdcard/SysMake/Install.sh
 		##########################################################################################
@@ -218,8 +217,8 @@ versionCode=$versionCode
 author=$author
 description=$description
 EOF
-echo -e "\n${blue}module.prop --> ${green} Created"
-echo -e "\n\n\e[1;101m ---Options--- ${white}\n\n\e[1;32m1. /system/priv-app\n\e[1;34m2. /system/product/app/\n\e[1;36m3. /system/app\n\n${solidred}Choose option: ${white}"
+echo -e "\n${blue}module.prop --> ${green} Created${white}"
+echo -e "\n\n\e[1;101m ---Options--- ${white}\n\n\e[1;32m1. /system/priv-app\n\e[1;34m2. /system/product/app/\n\e[1;36m3. /system/app\n\n${white}${solidred}Choose option: ${white}"
 read option
 if [ $option -eq 1 ]; then
 	fol="/sdcard/SysMake/system/priv-app"
@@ -238,5 +237,6 @@ unzip $HOME/sys-app-maker-magisk/meta-common.zip -d /sdcard/SysMake/
 cd /sdcard/SysMake/
 zip -r Magisk-$appName.zip ./*
 rm -rf /sdcard/SysMake/META-INF /sdcard/SysMake/common /sdcard/SysMake/Install.sh /sdcard/SysMake/system /sdcard/SysMake/module.prop
+rm -rf /sdcard/$appName
 echo -e "\e[1;101mFinished${white}"
 
