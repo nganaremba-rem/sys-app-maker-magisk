@@ -218,7 +218,7 @@ author=$author
 description=$description
 EOF
 echo -e "\n${blue}module.prop --> ${green} Created${white}"
-echo -ne "\n\n\e[1;101m ---Options--- ${white}\n\n\e[1;32m1. /system/priv-app\n\e[1;34m2. /system/product/app/\n\e[1;36m3. /system/app\n\n${white}${solidred}Choose option: ${white}"
+echo -ne "\n\n\e[1;101m ---Options--- ${white}\n\n\e[1;32m1. /system/priv-app\n\e[1;34m2. /system/product/app/\n\e[1;36m3. /system/app\n\n${white}${solidred}Choose option:${white} "
 read option
 if [ $option -eq 1 ]; then
 	fol="/sdcard/SysMake/system/priv-app"
