@@ -93,7 +93,8 @@ fi
 }
 	while [[ "$checkLoop" == "y" ]]
 	do
-	read -p $'\e[1;91mDo you want to add more app (y/n): ' checkLoop
+	read -p $'\e[1;91m\nDo you want to add more app (y/n): ' checkLoop
+	echo ""
 	[[ "$checkLoop" == "y" ]] || [[ "$checkLoop" == "Y" ]] && { app_loop; }
 	done
 	mkdir -p /sdcard/SysMake
@@ -239,9 +240,9 @@ set_permissions() {
 EOF
 
 ### changing ui print 
-sed -i "s/REMKU/$appName/" /sdcard/SysMake/Install.sh 
+sed -i "s/REMKU/MagiskSystemAppMaker/" /sdcard/SysMake/Install.sh 
 
-read -p $'\e[1;95m[OPTIONAL] Do you want to add module property (y/n): \e[0m' modprop
+read -p $'\e[1;92m\n\n[OPTIONAL] Do you want to add module property (y/n): \e[0m' modprop
 if [[ "$modprop" == "Y" ]] || [[ "$modprop" == "y" ]]; then
 ### input for module.prop
 echo -ne "\n\n${sred}  Module.prop  ${white}${green}\n\nid = ${white}"
