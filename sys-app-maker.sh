@@ -29,10 +29,10 @@ sleep 3
 ### package ###
 zip -v > /dev/null 2>&1
 check Zip_Install_Check
-[[ $flag == 0 ]] && { yes | pkg install zip }
+[[ $flag == 0 ]] && yes | pkg install zip
 unzip -v > /dev/null 2>&1
 check Unzip_Install_Check
-[[ $flag == 0 ]] && { yes | pkg install unzip }
+[[ $flag == 0 ]] && yes | pkg install unzip
 ### Setting Permission ###
 $sudo mount -o remount,rw /
 check Mounting_System
