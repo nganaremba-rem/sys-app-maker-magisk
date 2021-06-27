@@ -75,7 +75,7 @@ fi
 	mv /sdcard/$appName/*.apk /sdcard/$appName/$appName.apk > /dev/null 2>&1
 
 }
-	while [ "$checkLoop" != "n" || "$checkLoop" != "N" ]
+	while [[ "$checkLoop" != "n" || "$checkLoop" != "N" ]]
 	do
 	read -p $'\e[1;91mDo you want to add more app (y/n): ' checkLoop
 	[[ "$checkLoop" == "y" ]] || [[ "$checkLoop" == "Y" ]] && { app_loop; }
