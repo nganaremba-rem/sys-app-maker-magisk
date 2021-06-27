@@ -53,6 +53,7 @@ if [ ! -e "/sdcard/$appName" ]; then
 fi
 ### if app folder is present
         mv /sdcard/$appName/*.apk /sdcard/$appName/$appName.apk > /dev/null 2>&1
+checkLoop="y"
 app_loop(){
 
 ### APP checking ###
@@ -74,8 +75,11 @@ fi
 	mv /sdcard/$appName/*.apk /sdcard/$appName/$appName.apk > /dev/null 2>&1
 
 }
+	while [ "$checkLoop" != "n" || "$checkLoop" != "N" ]
+	do
 	read -p $'\e[1;91mDo you want to add more app (y/n): ' checkLoop
 	[[ "$checkLoop" == "y" ]] || [[ "$checkLoop" == "Y" ]] && { app_loop; }
+	done
 	mkdir -p /sdcard/SysMake
 	cat <<- 'EOF'> /sdcard/SysMake/Install.sh
 		##########################################################################################
