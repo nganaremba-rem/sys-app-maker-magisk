@@ -36,6 +36,23 @@ check Unzip_Install_Check
 ### Setting Permission ###
 $sudo mount -o remount,rw /
 check Mounting_System
+### APP checking ###
+read -p $'\e[1;92mEnter App Name or package name (eg. com.whatsapp) / (eg. whatsapp): \e[0m' appName
+### if app folder not present
+if [ ! -e "/sdcard/$appName" ]; then
+        echo -e "${red}App Folder Not Found in '/sdcard'${white}"
+        read -p $'\n\e[1;95mIs the app already installed as User APP (y/n): ' choice
+        ### Copying apk to /sdcard/app/app.apk
+        if [ "$choice" == "y" ]; then
+                $sudo mkdir -p /sdcard/$appName
+                $sudo pm list packages -f | grep -i "$appName" | grep "/data/app" | sed -e 's/.*package:\(.*\)=\(.*\)/\1/' | xargs -I '{}' cp {} /sdcard/$appName/$appName.apk
+                check Exporting_APK_to_sdcard
+        else
+                exit 1
+        fi
+fi
+### if app folder is present
+        mv /sdcard/$appName/*.apk /sdcard/$appName/$appName.apk > /dev/null 2>&1
 app_loop(){
 
 ### APP checking ###
