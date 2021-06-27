@@ -18,8 +18,10 @@ sudo="su -c"
 check(){
 	if [ $(echo $?) -eq 0 ]; then
 		echo -e "${blue}$1 --> ${green}OK${white}"
+		flag=1
 	else
 		echo -e "${blue}$1 --> ${red}ERROR${white}"
+		flag=0
 	fi
 }
 echo -e "${sblue} REM MAGISK MODULE SYSTEMIZER  ${white}\n"
@@ -27,11 +29,15 @@ sleep 3
 ### package ###
 zip -v > /dev/null 2>&1
 check Zip_Install_Check
+[[ $flag == 0 ]] && { yes | pkg install zip }
 unzip -v > /dev/null 2>&1
 check Unzip_Install_Check
+[[ $flag == 0 ]] && { yes | pkg install unzip }
 ### Setting Permission ###
 $sudo mount -o remount,rw /
 check Mounting_System
+app_loop(){
+
 ### APP checking ###
 read -p $'\e[1;92mEnter App Name or package name (eg. com.whatsapp) / (eg. whatsapp): \e[0m' appName
 ### if app folder not present
@@ -49,6 +55,10 @@ if [ ! -e "/sdcard/$appName" ]; then
 fi
 ### if app folder is present
 	mv /sdcard/$appName/*.apk /sdcard/$appName/$appName.apk > /dev/null 2>&1
+
+}
+	read -p $'\e[1;91mDo you want to add more app (y/n)' checkLoop
+	[[ "$checkLoop" == "y" ]] || [[ "$checkLoop" == "Y" ]] && { app_loop; }
 	mkdir -p /sdcard/SysMake
 	cat <<- 'EOF'> /sdcard/SysMake/Install.sh
 		##########################################################################################
@@ -194,7 +204,8 @@ EOF
 ### changing ui print 
 sed -i "s/REMKU/$appName/" /sdcard/SysMake/Install.sh 
 
-
+read -p "[OPTIONAL] Do you want to add module property (y/n): " modprop
+if [[ "$modprop" == "Y" ]] || [[ "$modprop" == "y" ]]; then
 ### input for module.prop
 echo -ne "\n\n${sred}  Module.prop  ${white}${green}\n\nid = ${white}"
 read id
@@ -217,6 +228,18 @@ versionCode=$versionCode
 author=$author
 description=$description
 EOF
+
+else
+### making module.prop
+cat <<- EOF> /sdcard/SysMake/module.prop
+id=101
+name=SystemApp
+version=1
+versionCode=1
+author=System
+description=SystemApp
+EOF
+fi
 echo -e "\n${blue}module.prop --> ${green} Created${white}"
 echo -ne "\n\n\e[1;101m ---Options--- ${white}\n\n\e[1;32m1. /system/priv-app\n\e[1;34m2. /system/product/app/\n\e[1;36m3. /system/app\n\n${white}${solidred}Choose option:${white} "
 read option
