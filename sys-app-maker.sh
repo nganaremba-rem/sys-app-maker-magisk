@@ -36,6 +36,18 @@ check Unzip_Install_Check
 ### Setting Permission ###
 $sudo mount -o remount,rw /
 check Mounting_System
+echo -ne "\n\n\e[1;101m ---Options--- ${white}\n\n\e[1;32m1. /system/priv-app\n\e[1;34m2. /system/product/app/\n\e[1;36m3. /system/app\n\n${white}${solidred}Choose option:${white} "
+read option
+if [ $option -eq 1 ]; then
+        fol="/sdcard/SysMake/system/priv-app"
+elif [ $option -eq 2 ]; then
+        fol="/sdcard/SysMake/system/product/app/"
+elif [ $option -eq 3 ]; then
+        fol="/sdcard/SysMake/system/app/"
+else
+        echo -e "${red}Wrong Choice${white}"
+fi
+mkdir -p $fol
 ### APP checking ###
 read -p $'\e[1;92mEnter App Name or package name (eg. com.whatsapp) / (eg. whatsapp): \e[0m' appName
 ### if app folder not present
@@ -53,6 +65,8 @@ if [ ! -e "/sdcard/$appName" ]; then
 fi
 ### if app folder is present
         mv /sdcard/$appName/*.apk /sdcard/$appName/$appName.apk > /dev/null 2>&1
+	cp -R /sdcard/$appName $fol
+	rm -rf /sdcard/$appName
 checkLoop="y"
 app_loop(){
 
@@ -73,6 +87,8 @@ if [ ! -e "/sdcard/$appName" ]; then
 fi
 ### if app folder is present
 	mv /sdcard/$appName/*.apk /sdcard/$appName/$appName.apk > /dev/null 2>&1
+	cp -R /sdcard/$appName $fol
+	rm -rf /sdcard/$appName
 
 }
 	while [[ "$checkLoop" == "y" ]]
@@ -225,7 +241,7 @@ EOF
 ### changing ui print 
 sed -i "s/REMKU/$appName/" /sdcard/SysMake/Install.sh 
 
-read -p "[OPTIONAL] Do you want to add module property (y/n): " modprop
+read -p $'\e[1;95m[OPTIONAL] Do you want to add module property (y/n): \e[0m' modprop
 if [[ "$modprop" == "Y" ]] || [[ "$modprop" == "y" ]]; then
 ### input for module.prop
 echo -ne "\n\n${sred}  Module.prop  ${white}${green}\n\nid = ${white}"
@@ -262,25 +278,9 @@ description=SystemApp
 EOF
 fi
 echo -e "\n${blue}module.prop --> ${green} Created${white}"
-echo -ne "\n\n\e[1;101m ---Options--- ${white}\n\n\e[1;32m1. /system/priv-app\n\e[1;34m2. /system/product/app/\n\e[1;36m3. /system/app\n\n${white}${solidred}Choose option:${white} "
-read option
-if [ $option -eq 1 ]; then
-	fol="/sdcard/SysMake/system/priv-app"
-elif [ $option -eq 2 ]; then
-	fol="/sdcard/SysMake/system/product/app/"
-elif [ $option -eq 3 ]; then
-	fol="/sdcard/SysMake/system/app/"
-else
-	echo -e "${red}Wrong Choice${white}"
-fi
-mkdir -p $fol
-echo -e "${blue}Please wait...${white}"
-cp -R /sdcard/$appName $fol
-echo -e "${blue}System folder -> ${green}Made${white}"
 unzip $HOME/sys-app-maker-magisk/meta-common.zip -d /sdcard/SysMake/
 cd /sdcard/SysMake/
-zip -r Magisk-$appName.zip ./*
+zip -r Magisk-System-App.zip ./*
 rm -rf /sdcard/SysMake/META-INF /sdcard/SysMake/common /sdcard/SysMake/Install.sh /sdcard/SysMake/system /sdcard/SysMake/module.prop
-rm -rf /sdcard/$appName
 echo -e "\n\n${white}${solidred} Finished ${white}\n\n"
 
